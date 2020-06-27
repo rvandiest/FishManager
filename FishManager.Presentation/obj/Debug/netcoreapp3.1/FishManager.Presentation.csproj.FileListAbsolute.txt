@@ -1,0 +1,8 @@
+C:\Users\rober\Documents\Werk\FishManager\FishManager.Presentation\bin\Debug\netcoreapp3.1\FishManager.Presentation.deps.json
+C:\Users\rober\Documents\Werk\FishManager\FishManager.Presentation\bin\Debug\netcoreapp3.1\FishManager.Presentation.dll
+C:\Users\rober\Documents\Werk\FishManager\FishManager.Presentation\bin\Debug\netcoreapp3.1\FishManager.Presentation.pdb
+C:\Users\rober\Documents\Werk\FishManager\FishManager.Presentation\obj\Debug\netcoreapp3.1\FishManager.Presentation.csprojAssemblyReference.cache
+C:\Users\rober\Documents\Werk\FishManager\FishManager.Presentation\obj\Debug\netcoreapp3.1\FishManager.Presentation.AssemblyInfoInputs.cache
+C:\Users\rober\Documents\Werk\FishManager\FishManager.Presentation\obj\Debug\netcoreapp3.1\FishManager.Presentation.AssemblyInfo.cs
+C:\Users\rober\Documents\Werk\FishManager\FishManager.Presentation\obj\Debug\netcoreapp3.1\FishManager.Presentation.dll
+C:\Users\rober\Documents\Werk\FishManager\FishManager.Presentation\obj\Debug\netcoreapp3.1\FishManager.Presentation.pdb
