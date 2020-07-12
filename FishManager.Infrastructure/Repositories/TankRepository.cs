@@ -4,31 +4,27 @@ using System.Linq;
 using FishManager.Domain.Entities;
 using FishManager.Domain.Repositories;
 using FishManager.Infrastructure.Contexts;
-using Microsoft.EntityFrameworkCore;
 
 namespace FishManager.Infrastructure.Repositories
 {
-    public class CasualtyRepository : IRepository<Casualty>
+    public class TankRepository : IRepository<Tank>
     {
         private FishManagerContext _context;
-        public CasualtyRepository(FishManagerContext context)
+        public TankRepository(FishManagerContext context)
         {
             _context = context;
         }
 
-        public U FindOne<U>(Func<Casualty, bool> predicate)
+        public U FindOne<U>(Func<Tank, bool> predicate)
         {
             return FindOne(predicate, sp => (U)Convert.ChangeType(sp, typeof(U)));
         }
 
-        public U FindOne<U>(Func<Casualty, bool> predicate, Func<Casualty, U> projector)
+        public U FindOne<U>(Func<Tank, bool> predicate, Func<Tank, U> projector)
         {
             try
             {
-                return _context.Casualties
-                    .Include(cs => cs.CasualtyCause)
-                    .Include(cs => cs.Species)
-                    .Include(cs => cs.Tank)
+                return _context.Tanks
                     .Where(predicate)
                     .Select(projector)
                     .First();
@@ -40,7 +36,7 @@ namespace FishManager.Infrastructure.Repositories
 
         }
 
-        public U FindOneOrCreate<U>(Func<Casualty, bool> predicate, Casualty value, Func<Casualty, U> projector)
+        public U FindOneOrCreate<U>(Func<Tank, bool> predicate, Tank value, Func<Tank, U> projector)
         {
             var existing = FindOne(predicate, projector);
             if (existing != null)
@@ -53,97 +49,93 @@ namespace FishManager.Infrastructure.Repositories
             }
         }
 
-        public U FindOneOrCreate<U>(Func<Casualty, bool> predicate, Casualty value)
+        public U FindOneOrCreate<U>(Func<Tank, bool> predicate, Tank value)
         {
             return FindOneOrCreate(predicate, value, sp => (U)Convert.ChangeType(sp, typeof(U)));
         }
 
-        public IEnumerable<U> FindAll<U>(Func<Casualty, bool> predicate)
+        public IEnumerable<U> FindAll<U>(Func<Tank, bool> predicate)
         {
             return FindAll(predicate, sp => (U)Convert.ChangeType(sp, typeof(U)));
         }
 
-        public IEnumerable<U> FindAll<U>(Func<Casualty, bool> predicate, Func<Casualty, U> projector)
+        public IEnumerable<U> FindAll<U>(Func<Tank, bool> predicate, Func<Tank, U> projector)
         {
-            return _context.Casualties
-                .Include(cs => cs.CasualtyCause)
-                .Include(cs => cs.Species)
-                .Include(cs => cs.Tank)
-                .Where(predicate)
+            return _context.Tanks.Where(predicate)
                 .Select(projector);
         }
 
 
-        public U InsertOne<U>(Casualty value, Func<Casualty, U> projector)
+        public U InsertOne<U>(Tank value, Func<Tank, U> projector)
         {
-            _context.Casualties.Add(value);
+            _context.Tanks.Add(value);
             _context.SaveChanges();
 
             return FindOne(sp => sp.Id == value.Id, projector);
         }
 
-        public U InsertOne<U>(Casualty value)
+        public U InsertOne<U>(Tank value)
         {
             return InsertOne(value, sp => (U)Convert.ChangeType(sp, typeof(U)));
         }
 
-        public IEnumerable<U> InsertAll<U>(IEnumerable<Casualty> values, Func<Casualty, U> projector)
+        public IEnumerable<U> InsertAll<U>(IEnumerable<Tank> values, Func<Tank, U> projector)
         {
 
-            _context.Casualties.AddRange(values);
+            _context.Tanks.AddRange(values);
             _context.SaveChanges();
 
             return FindAll(f => values.Select(ff => ff.Id).Contains(f.Id), projector);
         }
 
-        public IEnumerable<U> InsertAll<U>(IEnumerable<Casualty> values)
+        public IEnumerable<U> InsertAll<U>(IEnumerable<Tank> values)
         {
             return InsertAll(values, sp => (U)Convert.ChangeType(sp, typeof(U)));
         }
 
-        public U UpdateOne<U>(Casualty value, Func<Casualty, U> projector)
+        public U UpdateOne<U>(Tank value, Func<Tank, U> projector)
         {
 
-            _context.Casualties.Update(value);
+            _context.Tanks.Update(value);
             _context.SaveChanges();
 
             return FindOne(f => f.Id == value.Id, projector);
         }
 
-        public U UpdateOne<U>(Casualty value)
+        public U UpdateOne<U>(Tank value)
         {
             return UpdateOne(value, sp => (U)Convert.ChangeType(sp, typeof(U)));
         }
 
-        public IEnumerable<U> UpdateAll<U>(IEnumerable<Casualty> values, Func<Casualty, U> projector)
+        public IEnumerable<U> UpdateAll<U>(IEnumerable<Tank> values, Func<Tank, U> projector)
         {
 
-            _context.Casualties.UpdateRange(values);
+            _context.Tanks.UpdateRange(values);
             _context.SaveChanges();
 
             return FindAll(f => values.Select(ff => ff.Id).Contains(f.Id), projector);
         }
 
-        public IEnumerable<U> UpdateAll<U>(IEnumerable<Casualty> value)
+        public IEnumerable<U> UpdateAll<U>(IEnumerable<Tank> value)
         {
             return UpdateAll(value, sp => (U)Convert.ChangeType(sp, typeof(U)));
         }
 
-        public void DeleteOne(Func<Casualty, bool> predicate)
+        public void DeleteOne(Func<Tank, bool> predicate)
         {
 
-            var toDelete = _context.Casualties.Where(predicate)
+            var toDelete = _context.Tanks.Where(predicate)
                         .First();
 
-            _context.Casualties.Remove(toDelete);
+            _context.Tanks.Remove(toDelete);
             _context.SaveChanges();
 
         }
 
-        public void DeleteAll(Func<Casualty, bool> predicate)
+        public void DeleteAll(Func<Tank, bool> predicate)
         {
 
-            _context.Casualties.RemoveRange(_context.Casualties.Where(predicate));
+            _context.Tanks.RemoveRange(_context.Tanks.Where(predicate));
             _context.SaveChanges();
 
         }

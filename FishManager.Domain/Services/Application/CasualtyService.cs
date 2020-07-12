@@ -29,6 +29,8 @@ namespace FishManager.Domain.Services.Application
         {
             var casualty = _mapper.Map<Casualty>(casualtydto);
 
+            casualty.Timestamp = DateTime.Now;
+
             casualty.CasualtyCause = _repo.CasualtyCauses.FindOneOrCreate<CasualtyCause>(
                 (cs) => { return casualty.CasualtyCause.Name.Equals(cs.Name) && casualty.CasualtyCause.Category.Equals(cs.Category); },
                 new CasualtyCause
@@ -44,6 +46,14 @@ namespace FishManager.Domain.Services.Application
                 {
                     Name = casualty.Species.Name,
                     Genus = casualty.Species.Genus
+                }
+            );
+
+            casualty.Tank = _repo.Tanks.FindOneOrCreate<Tank>(
+                (sp) => { return casualty.Tank.Name.Equals(sp.Name); },
+                new Tank
+                {
+                    Name = casualty.Tank.Name,
                 }
             );
 

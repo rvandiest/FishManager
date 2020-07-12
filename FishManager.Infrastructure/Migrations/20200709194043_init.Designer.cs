@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishManager.Infrastructure.Migrations
 {
     [DbContext(typeof(FishManagerContext))]
-    [Migration("20200626104113_init")]
+    [Migration("20200709194043_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,9 @@ namespace FishManager.Infrastructure.Migrations
                     b.Property<int>("SpeciesId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TankId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime");
 
@@ -42,6 +45,8 @@ namespace FishManager.Infrastructure.Migrations
                     b.HasIndex("CasualtyCauseId");
 
                     b.HasIndex("SpeciesId");
+
+                    b.HasIndex("TankId");
 
                     b.ToTable("Casualties");
                 });
@@ -80,10 +85,27 @@ namespace FishManager.Infrastructure.Migrations
                     b.ToTable("Species");
                 });
 
+            modelBuilder.Entity("FishManager.Domain.Entities.Tank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(767)");
+
+                    b.HasKey("Id");
+
+                    b.HasAlternateKey("Name");
+
+                    b.ToTable("Tanks");
+                });
+
             modelBuilder.Entity("FishManager.Domain.Entities.Casualty", b =>
                 {
                     b.HasOne("FishManager.Domain.Entities.CasualtyCause", "CasualtyCause")
-                        .WithMany()
+                        .WithMany("Casualties")
                         .HasForeignKey("CasualtyCauseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -91,6 +113,12 @@ namespace FishManager.Infrastructure.Migrations
                     b.HasOne("FishManager.Domain.Entities.Species", "Species")
                         .WithMany()
                         .HasForeignKey("SpeciesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FishManager.Domain.Entities.Tank", "Tank")
+                        .WithMany("Casualties")
+                        .HasForeignKey("TankId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

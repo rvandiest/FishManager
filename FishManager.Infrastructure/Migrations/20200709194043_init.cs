@@ -37,6 +37,20 @@ namespace FishManager.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tanks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tanks", x => x.Id);
+                    table.UniqueConstraint("AK_Tanks_Name", x => x.Name);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Casualties",
                 columns: table => new
                 {
@@ -45,6 +59,7 @@ namespace FishManager.Infrastructure.Migrations
                     SpeciesId = table.Column<int>(nullable: false),
                     Count = table.Column<int>(nullable: false),
                     CasualtyCauseId = table.Column<int>(nullable: false),
+                    TankId = table.Column<int>(nullable: false),
                     Timestamp = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -62,6 +77,12 @@ namespace FishManager.Infrastructure.Migrations
                         principalTable: "Species",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Casualties_Tanks_TankId",
+                        column: x => x.TankId,
+                        principalTable: "Tanks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -73,6 +94,11 @@ namespace FishManager.Infrastructure.Migrations
                 name: "IX_Casualties_SpeciesId",
                 table: "Casualties",
                 column: "SpeciesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Casualties_TankId",
+                table: "Casualties",
+                column: "TankId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -85,6 +111,9 @@ namespace FishManager.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Species");
+
+            migrationBuilder.DropTable(
+                name: "Tanks");
         }
     }
 }

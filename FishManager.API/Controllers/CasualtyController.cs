@@ -23,10 +23,13 @@ namespace FishManager.API.Controllers
 
         [HttpGet]
         [Route("api/[controller]/range/{start}/{end}")]
-        public List<CasualtyDto> GetAllInRange(DateTime start, DateTime end)
+        public JsonResult GetAllInRange(DateTime start, DateTime end)
         {
-            var result = _services.CasualtyService.Find(cs => cs.Timestamp >= start && cs.Timestamp <= end).ToList();
-            return result;
+            var result = _services.CasualtyService
+                .Find(cs => cs.Timestamp >= start && cs.Timestamp <= end)
+                .ToList();
+                
+            return new JsonResult(result);
         }
 
         [HttpPost]

@@ -4,5 +4,6 @@ namespace FishManager.Domain.Services.Application
     {
         ICasualtyService CasualtyService { get; }
         ISpeciesService SpeciesService { get; }
+        ISuggestionService SuggestionService { get; }
     }
 }

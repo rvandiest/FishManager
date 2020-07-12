@@ -25,7 +25,9 @@ namespace FishManager.Domain.Services.Miscelleanous
                     cfg.CreateMap<CasualtyCause, CasualtyCauseDto>();
                     cfg.CreateMap<SpeciesDto, Species>();
                     cfg.CreateMap<CasualtyDto, Casualty>();
-                    cfg.CreateMap<CasualtyDto, CasualtyCause>();
+                    cfg.CreateMap<CasualtyCauseDto, CasualtyCause>();
+                    cfg.CreateMap<Tank, TankDto>();
+                    cfg.CreateMap<TankDto, Tank>();
                 }));
             }
             return instance;

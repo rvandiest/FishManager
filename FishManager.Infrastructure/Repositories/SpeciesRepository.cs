@@ -22,10 +22,18 @@ namespace FishManager.Infrastructure.Repositories
 
         public U FindOne<U>(Func<Species, bool> predicate, Func<Species, U> projector)
         {
-            return _context.Species
-                .Where(predicate)
-                .Select(projector)
-                .First();
+            try
+            {
+                return _context.Species
+                    .Where(predicate)
+                    .Select(projector)
+                    .First();
+            }
+            catch (InvalidOperationException)
+            {
+                return default(U);
+            }
+
         }
 
         public U FindOneOrCreate<U>(Func<Species, bool> predicate, Species value, Func<Species, U> projector)

@@ -12,6 +12,8 @@ namespace FishManager.Domain.Entities
         public int Count { get; set; }
         public int CasualtyCauseId { get; set; }
         public CasualtyCause CasualtyCause { get; set; }
+        public Tank Tank { get; set; }
+        public int TankId { get; set; }
         public DateTime Timestamp { get; set; }
     }
 }

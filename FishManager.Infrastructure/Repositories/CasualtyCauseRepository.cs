@@ -23,11 +23,19 @@ namespace FishManager.Infrastructure.Repositories
 
         public U FindOne<U>(Func<CasualtyCause, bool> predicate, Func<CasualtyCause, U> projector)
         {
-            return _context.CasualtyCauses
-                .Include(cc=>cc.Casualties)
-                .Where(predicate)
-                .Select(projector)
-                .First();
+            try
+            {
+                return _context.CasualtyCauses
+                    .Include(cc => cc.Casualties)
+                    .Where(predicate)
+                    .Select(projector)
+                    .First();
+            }
+            catch (InvalidOperationException)
+            {
+                return default(U);
+            }
+
         }
 
         public U FindOneOrCreate<U>(Func<CasualtyCause, bool> predicate, CasualtyCause value, Func<CasualtyCause, U> projector)

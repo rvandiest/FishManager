@@ -26,9 +26,9 @@ namespace FishManager.API
 
             services.AddControllersWithViews();
 
-            services.AddSingleton<FishManagerContext>();
-            services.AddSingleton<IFishManagerRepository, FishManagerRepository>();
-            services.AddSingleton<IFishManagerApplicationServiceCollection, FishManagerApplicationServiceCollection>();
+            services.AddScoped<FishManagerContext>();
+            services.AddScoped<IFishManagerRepository, FishManagerRepository>();
+            services.AddScoped<IFishManagerApplicationServiceCollection, FishManagerApplicationServiceCollection>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
